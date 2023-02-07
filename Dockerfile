@@ -8,16 +8,17 @@ RUN apk update && apk add alpine-sdk git && rm -rf /var/cache/apk/*
 WORKDIR /app
 COPY go.mod .
 COPY go.sum .
-RUN ls -lah
+# RUN ls -lah
 RUN go mod download
 
 COPY . .
+RUN go test ./...
 RUN go build -o main main.go
 
 # run
 FROM alpine:3.17
 WORKDIR /app
-RUN ls -alh
+# RUN ls -alh
 COPY --from=builder /app .
 
 EXPOSE 8080
