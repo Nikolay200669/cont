@@ -17,10 +17,11 @@ RUN go build -o main main.go
 
 # run
 FROM alpine:3.17
+ARG port="8080"
 WORKDIR /app
-# RUN ls -alh
+ENV PORT ${port}
 COPY --from=builder /app .
 
-EXPOSE 8080
+EXPOSE ${port}
 
 ENTRYPOINT /app/main
